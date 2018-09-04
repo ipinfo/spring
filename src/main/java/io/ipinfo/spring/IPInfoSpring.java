@@ -36,19 +36,15 @@ public class IPInfoSpring extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (!interceptorStrategy.shouldRun(request)) {
-            return true;
-        }
+        if (!interceptorStrategy.shouldRun(request)) return true;
 
         String ip = ipStrategy.getIPAddress(request);
+        if (ip == null) return true;
 
-        IPResponse ipResponse = null;
 
-        if (ip != null) {
-            ipResponse = ipInfo.lookupIP(ip);
-        }
-
+        IPResponse ipResponse = ipInfo.lookupIP(ip);
         attributeStrategy.storeAttribute(request, ipResponse);
+
         return true;
     }
 }

@@ -10,4 +10,9 @@ public class RequestAttributeStrategy implements AttributeStrategy {
     public void storeAttribute(HttpServletRequest request, IPResponse response) {
         request.setAttribute(IPInfoSpring.ATTRIBUTE_KEY, response);
     }
+
+    @Override
+    public IPResponse getAttribute(HttpServletRequest request) {
+        return (IPResponse) request.getAttribute(IPInfoSpring.ATTRIBUTE_KEY);
+    }
 }
