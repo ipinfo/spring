@@ -5,7 +5,6 @@ import io.ipinfo.spring.strategies.attribute.AttributeStrategy;
 import io.ipinfo.spring.strategies.attribute.RequestAttributeStrategy;
 import io.ipinfo.spring.strategies.interceptor.BotInterceptorStrategy;
 import io.ipinfo.spring.strategies.interceptor.InterceptorStrategy;
-import io.ipinfo.spring.strategies.interceptor.TrueInterceptorStrategy;
 import io.ipinfo.spring.strategies.ip.IPStrategy;
 import io.ipinfo.spring.strategies.ip.SimpleIPStrategy;
 
