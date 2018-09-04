@@ -5,6 +5,7 @@ import io.ipinfo.spring.strategies.attribute.AttributeStrategy;
 import io.ipinfo.spring.strategies.attribute.RequestAttributeStrategy;
 import io.ipinfo.spring.strategies.interceptor.BotInterceptorStrategy;
 import io.ipinfo.spring.strategies.interceptor.InterceptorStrategy;
+import io.ipinfo.spring.strategies.interceptor.TrueInterceptorStrategy;
 import io.ipinfo.spring.strategies.ip.IPStrategy;
 import io.ipinfo.spring.strategies.ip.SimpleIPStrategy;
 
@@ -19,17 +20,17 @@ public class IPInfoSpringBuilder {
         return this;
     }
 
-    public IPInfoSpringBuilder setAttributeStrategy(AttributeStrategy attributeStrategy) {
+    public IPInfoSpringBuilder attributeStrategy(AttributeStrategy attributeStrategy) {
         this.attributeStrategy = attributeStrategy;
         return this;
     }
 
-    public IPInfoSpringBuilder setIpStrategy(IPStrategy ipStrategy) {
+    public IPInfoSpringBuilder ipStrategy(IPStrategy ipStrategy) {
         this.ipStrategy = ipStrategy;
         return this;
     }
 
-    public IPInfoSpringBuilder setInterceptorStrategy(InterceptorStrategy interceptorStrategy) {
+    public IPInfoSpringBuilder interceptorStrategy(InterceptorStrategy interceptorStrategy) {
         this.interceptorStrategy = interceptorStrategy;
         return this;
     }
