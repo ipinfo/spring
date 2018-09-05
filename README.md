@@ -1,7 +1,7 @@
 # Spring-IPinfo: A spring middleware for the [IPinfo](https://ipinfo.io/) API.
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
-[![Travis](https://travis-ci.com/ipinfo/spring.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/java-ipinfo)
+[![Travis](https://travis-ci.com/ipinfo/spring.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/spring)
 
 Spring-IPinfo is a middleware for the IPinfo API, which provides up-to-date IP address data.
 
