@@ -11,7 +11,6 @@ Contents:
     - [Features:](#features)
     - [Usage](#usage)
         - [Maven](#maven)
-    - [Usage](#usage)
         - [Construction](#construction)
         - [Adding to Interceptors](#adding-to-interceptors)
         - [Accessing Value](#accessing-value)
@@ -63,9 +62,6 @@ Dependency:
 </dependencies>
 ```
 
-----
-
-## Usage
 
 ### Construction
 
@@ -150,6 +146,8 @@ public class MainController {
     }
 }
 ````
+
+----
 
 ## Structure
 
