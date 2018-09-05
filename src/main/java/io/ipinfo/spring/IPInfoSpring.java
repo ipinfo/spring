@@ -38,6 +38,10 @@ public class IPInfoSpring extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!interceptorStrategy.shouldRun(request)) return true;
 
+        // Don't waste an API call if we already have it.
+        // This should only happen for RequestAttributeStrategy and potentially other implementations.
+        if (attributeStrategy.hasAttribute(request)) return true;
+
         String ip = ipStrategy.getIPAddress(request);
         if (ip == null) return true;
 
