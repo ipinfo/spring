@@ -71,13 +71,13 @@ Dependency:
 
 ### Construction
 
-Using this library is very simple. `IPInfoSpring` is exposed through a builder:
+Using this library is very simple. `IPinfoSpring` is exposed through a builder:
 
 ```java
-    IPInfoSpringBuilder builder = IPInfoSpring.builder();
+    IPinfoSpringBuilder builder = IPinfoSpring.builder();
     
-    // Set the IPInfo instance. By default we provide one, however you're allowed to change this here.
-    builder.ipInfo(IPInfo.builder().build());
+    // Set the IPinfo instance. By default we provide one, however you're allowed to change this here.
+    builder.ipInfo(IPinfo.builder().build());
 
     // Set the InterceptorStrategy. By default we use BotInterceptorStrategy.
     builder.interceptorStrategy(new BotInterceptorStrategy());
@@ -89,17 +89,17 @@ Using this library is very simple. `IPInfoSpring` is exposed through a builder:
     builder.attributeStrategy(new SessionAttributeStrategy());
 
     // Finally build it into ipInfoSpring
-    IPInfoSpring ipInfoSpring = builder.build();
+    IPinfoSpring ipInfoSpring = builder.build();
 ```
 
 ### Adding to Interceptors
-To use this as an interceptor in Spring, you simply need to expose your configuration and add `IPInfoSpring` you obtained from the builder here:
+To use this as an interceptor in Spring, you simply need to expose your configuration and add `IPinfoSpring` you obtained from the builder here:
 
 ````java
 @Configuration
 public class ApplicationConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(IPInfoSpring.builder().build());
+        registry.addInterceptor(IPinfoSpring.builder().build());
     }
 }
 ````
@@ -108,14 +108,14 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
 
 There are two methods of getting the IPResponse that was injected into the attributes:
 
-1. Access it directly using the key defined in `IPInfoSpring`.
+1. Access it directly using the key defined in `IPinfoSpring`.
 2. Access it using a reference to `attributeStrategy`.
 
 The code below showcases the two different methods:
 
 ````java
 import io.ipinfo.api.model.IPResponse;
-import io.ipinfo.spring.IPInfoSpring;
+import io.ipinfo.spring.IPinfoSpring;
 import io.ipinfo.spring.strategies.attribute.AttributeStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -142,7 +142,7 @@ public class MainController {
 
     @RequestMapping("/bar")
     public String bar(HttpServletRequest request) {
-        IPResponse ipResponse = (IPResponse) request.getSession().getAttribute(IPInfoSpring.ATTRIBUTE_KEY);
+        IPResponse ipResponse = (IPResponse) request.getSession().getAttribute(IPinfoSpring.ATTRIBUTE_KEY);
 
         if (ipResponse == null) {
             return "no ipresponse";
@@ -197,7 +197,7 @@ Unfortunately, due to the topography of the web today, it's not as easy as getti
 We provide a very simple implementation of IPStrategy called `SimpleIPStrategy`.
  
 ##### SimpleIPStrategy 
-This strategy simply looks at the IP of a request and uses that to extract more data using IPInfo.
+This strategy simply looks at the IP of a request and uses that to extract more data using IPinfo.
 
 ##### Default
 
@@ -220,7 +220,7 @@ This strategy stores the IPResponseor the entire session. This would be much mor
 ##### Default
 By default we use `SessionAttributeStrategy` and we recommend you stick to that.
 
-As with all the strategies, you can implement and pass in your own custom ones to `IPInfoSpring`.
+As with all the strategies, you can implement and pass in your own custom ones to `IPinfoSpring`.
 
 ### Errors
 
