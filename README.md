@@ -1,112 +1,69 @@
 # [<img src="https://ipinfo.io/static/ipinfo-small.svg" alt="IPinfo" width="24"/>](https://ipinfo.io/) IPinfo Spring Client Library
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
-[![Travis](https://travis-ci.com/ipinfo/spring.svg?branch=master&style=flat-square)](https://travis-ci.com/ipinfo/spring)
 
-This is the official Spring client library for the IPinfo.io IP address API, allowing you to lookup your own IP address, or get any of the following details for an IP:
+This is the official Spring client library for the IPinfo.io IP address API,
+allowing you to lookup your own IP address, or get any of the following details
+for an IP:
+
  - [IP geolocation](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
  - [ASN](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting or company)
  - [Company](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
  - [Carrier](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
-Contents:
-
-- [Spring-IPinfo: A spring middleware for the IPinfo API.](#spring-ipinfo-a-spring-middleware-for-the-ipinfo-api)
-    - [Features:](#features)
-    - [Usage](#usage)
-        - [Maven](#maven)
-        - [Construction](#construction)
-        - [Adding to Interceptors](#adding-to-interceptors)
-        - [Accessing Value](#accessing-value)
-    - [Structure](#structure)
-        - [Strategies](#strategies)
-            - [InterceptorStrategy](#interceptorstrategy)
-                - [BotInterceptorStrategy](#botinterceptorstrategy)
-                - [TrueInterceptorStrategy](#trueinterceptorstrategy)
-                - [Default](#default)
-            - [IPStrategy](#ipstrategy)
-                - [SimpleIPStrategy](#simpleipstrategy)
-                - [Default](#default)
-            - [Attribute Strategy](#attribute-strategy)
-                - [RequestAttributeStrategy](#requestattributestrategy)
-                - [SessionAttributeStrategy](#sessionattributestrategy)
-                - [Default](#default)
-        - [Errors](#errors)
-    - [Other Libraries](#other-libraries)
-    - [About IPinfo](#about-ipinfo)
-
-## Features:
-
-- IP lookup for requests
-- IP lookup for sessions
-- The option to ignore bots
-
 ## Usage
 
 ### Maven
-Repository:
-
-```xml
-<repositories>
-    <repository>
-        <id>sonatype-snapshots</id>
-        <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-    </repository>
-</repositories>
-```
-
-Dependency:
 
 ```xml
 <dependencies>
     <dependency>
         <groupId>io.ipinfo</groupId>
-        <artifactId>spring-ipinfo</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>ipinfo-spring</artifactId>
+        <version>1.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
 ```
-
 
 ### Construction
 
 Using this library is very simple. `IPinfoSpring` is exposed through a builder:
 
 ```java
-    IPinfoSpringBuilder builder = IPinfoSpring.builder();
-    
-    // Set the IPinfo instance. By default we provide one, however you're allowed to change this here.
-    builder.ipInfo(IPinfo.builder().build());
-
-    // Set the InterceptorStrategy. By default we use BotInterceptorStrategy.
-    builder.interceptorStrategy(new BotInterceptorStrategy());
-
-    // Set the IPStrategy. By default we use SimpleIPStrategy.
-    builder.ipStrategy(new SimpleIPStrategy());
-
-    // Set the AttributeStrategy. By default we use SessionAttributeStrategy.
-    builder.attributeStrategy(new SessionAttributeStrategy());
-
-    // Finally build it into ipInfoSpring
-    IPinfoSpring ipInfoSpring = builder.build();
+    IPinfoSpring ipinfoSpring = new IPinfoSpring.Builder()
+        // Set the IPinfo instance. By default we provide one, however you're
+        // allowed to change this here.
+        .setIPinfo(new IPinfo.Builder().build())
+        // Set the InterceptorStrategy. By default we use
+        // BotInterceptorStrategy.
+        .interceptorStrategy(new BotInterceptorStrategy())
+        // Set the IPStrategy. By default we use SimpleIPStrategy.
+        .ipStrategy(new SimpleIPStrategy())
+        // Set the AttributeStrategy. By default we use SessionAttributeStrategy.
+        .attributeStrategy(new SessionAttributeStrategy())
+        // Finally build it.
+        .build();
 ```
 
 ### Adding to Interceptors
-To use this as an interceptor in Spring, you simply need to expose your configuration and add `IPinfoSpring` you obtained from the builder here:
+
+To use this as an interceptor in Spring, you simply need to expose your
+configuration and add `IPinfoSpring` you obtained from the builder here:
 
 ````java
 @Configuration
 public class ApplicationConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(IPinfoSpring.builder().build());
+        registry.addInterceptor(new IPinfoSpring.Builder().build());
     }
 }
 ````
 
 ### Accessing Value
 
-There are two methods of getting the IPResponse that was injected into the attributes:
+There are two methods of getting the IPResponse that was injected into the
+attributes:
 
 1. Access it directly using the key defined in `IPinfoSpring`.
 2. Access it using a reference to `attributeStrategy`.
@@ -128,7 +85,6 @@ public class MainController {
     @Autowired
     private AttributeStrategy attributeStrategy;
 
-
     @RequestMapping("/foo")
     public String foo(HttpServletRequest request) {
         IPResponse ipResponse = attributeStrategy.getAttribute(request);
@@ -142,7 +98,9 @@ public class MainController {
 
     @RequestMapping("/bar")
     public String bar(HttpServletRequest request) {
-        IPResponse ipResponse = (IPResponse) request.getSession().getAttribute(IPinfoSpring.ATTRIBUTE_KEY);
+        IPResponse ipResponse = (IPResponse) request
+                .getSession()
+                .getAttribute(IPinfoSpring.ATTRIBUTE_KEY);
 
         if (ipResponse == null) {
             return "no ipresponse";
@@ -153,82 +111,52 @@ public class MainController {
 }
 ````
 
-----
+### `InterceptorStrategy`
 
-## Structure
+The `InterceptorStrategy` allows the middleware to know when to actually run
+the API calls to [ipinfo.io](https://ipinfo.io/).
 
-At first glance, the way to use this code might look a little complicated. But rest assured that the code is designed in a way to be used within any sort of complexity of your code.
+- `BotInterceptorStrategy` (default)
+  This does some very basic checks to see if the request is coming from a
+  spider/crawler, and ignores them.
 
-### Strategies
+- `TrueInterceptorStrategy`
+  This runs the API calls all the time.
 
-The code contains three main strategies.
+### `IPStrategy`
 
-1. `InterceptorStrategy`
-2. `IPStrategy`
-3. `AttributeStrategy`
+The `IPStrategy` allows the middleware to know how to extract the IP address of
+an incoming request.
 
+Unfortunately, due to the topography of the web today, it's not as easy as
+getting the IP address from the request. CDNs, reverse proxies, and countless
+other technologies change the origin of a request that a web server can see.
 
-#### InterceptorStrategy
+- `SimpleIPStrategy` (default)
+  This strategy simply looks at the IP of a request and uses that to extract
+  more data using IPinfo.
 
-The `InterceptorStrategy` allows the middleware to know when to actually run the API calls to [ipinfo.io](https://ipinfo.io/).
+### `AttributeStrategy`
 
-We provide two implementations of this:
- - `BotInterceptorStrategy`
- - `TrueInterceptorStrategy`
- 
-##### BotInterceptorStrategy
+The `AttributeStrategy` allows the middleware to know where to store the
+`IPResponse` from [ipinfo.io](https://ipinfo.io/).
 
-This does some very basic checks to see if the request is coming from a spider/crawler, and ignores them.
+- `SessionAttributeStrategy` (default)
+  This strategy stores the IPResponse for the entire session. This would be
+  much more efficient.
 
-##### TrueInterceptorStrategy
-
-This runs the API calls all the time.
-
-##### Default
-
-By default, we use the BotInterceptorStrategy.
-
-#### IPStrategy
-
-The `IPStrategy` allows the middleware to know how to extract the IP address of an incoming request.
-
-Unfortunately, due to the topography of the web today, it's not as easy as getting the IP address from the request. CDNs, reverse proxies, and countless other technologies change the origin of a request that a web server can see.
-
-We provide a very simple implementation of IPStrategy called `SimpleIPStrategy`.
- 
-##### SimpleIPStrategy 
-This strategy simply looks at the IP of a request and uses that to extract more data using IPinfo.
-
-##### Default
-
-By default we use `SimpleIPStrategy`. 
-
-#### Attribute Strategy
-
-The `AttributeStrategy` allows the middleware to know where to store the `IPResponse` from [ipinfo.io](https://ipinfo.io/).
-
-We provide two implementations of this:
- - `RequestAttributeStrategy`
- - `SessionAttributeStrategy`
-
-##### RequestAttributeStrategy  
-This strategy stores the IPResponse per request, this would lead the more API calls to [ipinfo.io](https://ipinfo.io/)
-
-##### SessionAttributeStrategy
-This strategy stores the IPResponseor the entire session. This would be much more efficient.
-
-##### Default
-By default we use `SessionAttributeStrategy` and we recommend you stick to that.
-
-As with all the strategies, you can implement and pass in your own custom ones to `IPinfoSpring`.
+- `RequestAttributeStrategy`
+  This strategy stores the IPResponse per request; this would lead to more API
+  calls to [ipinfo.io](https://ipinfo.io/)
 
 ### Errors
 
-Any exceptions such as `RateLimitedException` is passed through Spring's error handling system.
+Any exceptions such as `RateLimitedException` is passed through Spring's error
+handling system.
 
 ### Other Libraries
 
-There are [official IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API. 
+There are [official IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API.
 
 ### About IPinfo
 
