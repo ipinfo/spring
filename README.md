@@ -6,10 +6,24 @@ This is the official Spring client library for the IPinfo.io IP address API,
 allowing you to lookup your own IP address, or get any of the following details
 for an IP:
 
- - [IP geolocation](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
- - [ASN](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting or company)
- - [Company](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
- - [Carrier](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
+ - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
+ - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting or company)
+ - [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
+ - [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
+
+Check all the data we have for your IP address [here](https://ipinfo.io/what-is-my-ip).
+
+## Getting Started
+
+You'll need an IPinfo API access token, which you can get by singing up for a
+free account at [https://ipinfo.io/signup](https://ipinfo.io/signup).
+
+The free plan is limited to 50,000 requests per month, and doesn't include some
+of the data fields such as IP type and company data. To enable all the data
+fields and additional request volumes see
+[https://ipinfo.io/pricing](https://ipinfo.io/pricing)
+
+[Click here to view the Java Spring SDK's API documentation](https://ipinfo.github.io/spring/).
 
 ## Usage
 
