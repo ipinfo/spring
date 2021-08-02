@@ -20,7 +20,7 @@ for an IP:
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-spring</artifactId>
-        <version>1.0</version>
+        <version>0.1.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
