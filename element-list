@@ -1,0 +1,4 @@
+io.ipinfo.spring
+io.ipinfo.spring.strategies.attribute
+io.ipinfo.spring.strategies.interceptor
+io.ipinfo.spring.strategies.ip

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"io.ipinfo.spring"},{"l":"io.ipinfo.spring.strategies.attribute"},{"l":"io.ipinfo.spring.strategies.interceptor"},{"l":"io.ipinfo.spring.strategies.ip"}];updateSearchResults();
