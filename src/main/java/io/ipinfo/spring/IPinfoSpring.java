@@ -48,7 +48,8 @@ public class IPinfoSpring extends HandlerInterceptorAdapter {
         }
 
         // Don't waste an API call if we already have it.
-        // This should only happen for RequestAttributeStrategy and potentially other implementations.
+        // This should only happen for RequestAttributeStrategy and potentially
+        // other implementations.
         if (attributeStrategy.hasAttribute(request)) {
             return true;
         }
