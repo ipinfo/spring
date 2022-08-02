@@ -2,7 +2,7 @@ package io.ipinfo.spring.strategies.ip;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class XForwardedFor implements IPStrategy {
+public class XForwardedForIPStrategy implements IPStrategy {
     /**
      * Gets the ip address using the X-Forwarded-For header.
      *

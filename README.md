@@ -150,8 +150,8 @@ other technologies change the origin of a request that a web server can see.
   This strategy simply looks at the IP of a request and uses that to extract
   more data using IPinfo.
 
-- `XForwardedFor`
-  This strategy will extract IP from `X-Forwarded-For` header and if it's null
+- `XForwardedForIPStrategy`
+  This strategy will extract the IP from the `X-Forwarded-For` header and if it's null
   it'll extract IP using `REMOTE_ADDR` of client.
 
 ### `AttributeStrategy`
