@@ -3,7 +3,7 @@ package io.ipinfo.spring.strategies.attribute;
 import io.ipinfo.api.model.IPResponse;
 import io.ipinfo.spring.IPinfoSpring;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class SessionAttributeStrategy implements AttributeStrategy {
     @Override

@@ -8,12 +8,12 @@ import io.ipinfo.spring.strategies.interceptor.BotInterceptorStrategy;
 import io.ipinfo.spring.strategies.interceptor.InterceptorStrategy;
 import io.ipinfo.spring.strategies.ip.IPStrategy;
 import io.ipinfo.spring.strategies.ip.SimpleIPStrategy;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-public class IPinfoSpring extends HandlerInterceptorAdapter {
+public class IPinfoSpring implements HandlerInterceptor {
     public static final String ATTRIBUTE_KEY = "IPinfoOfficialSparkWrapper.IPResponse";
     private final IPinfo ii;
     private final AttributeStrategy attributeStrategy;
