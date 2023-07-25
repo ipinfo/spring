@@ -1,6 +1,6 @@
 package io.ipinfo.spring.strategies.ip;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class SimpleIPStrategy implements IPStrategy {
     /**

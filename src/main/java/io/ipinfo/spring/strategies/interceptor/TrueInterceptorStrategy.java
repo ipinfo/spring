@@ -1,6 +1,6 @@
 package io.ipinfo.spring.strategies.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class TrueInterceptorStrategy implements InterceptorStrategy {
     @Override
