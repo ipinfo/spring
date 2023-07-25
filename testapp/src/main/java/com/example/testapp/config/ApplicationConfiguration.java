@@ -16,7 +16,7 @@ public class ApplicationConfiguration implements WebMvcConfigurer {
     @Bean
     public IPinfoSpring ipinfoSpring() {
         return new IPinfoSpring.Builder()
-                .setIPinfo(new IPinfo.Builder().setToken("IPINFO ACCESS TOKEN").build())
+                .setIPinfo(new IPinfo.Builder().setToken(System.getenv("IPINFO_TOKEN")).build())
                 .interceptorStrategy(new TrueInterceptorStrategy())
                 .ipStrategy(new XForwardedForIPStrategy())
                 .attributeStrategy(attributeStrategy())
