@@ -47,8 +47,8 @@ Using this library is very simple. `IPinfoSpring` is exposed through a builder:
 ```java
     IPinfoSpring ipinfoSpring = new IPinfoSpring.Builder()
         // Set the IPinfo instance. By default we provide one, however you're
-        // allowed to change this here.
-        .setIPinfo(new IPinfo.Builder().build())
+        // allowed to change this here. Also provide your IPinfo Access Token here.
+        .setIPinfo(new IPinfo.Builder().setToken("IPINFO ACCESS TOKEN").build())
         // Set the InterceptorStrategy. By default we use
         // BotInterceptorStrategy.
         .interceptorStrategy(new BotInterceptorStrategy())
