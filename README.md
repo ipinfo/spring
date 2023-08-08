@@ -3,11 +3,11 @@
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
 
 This is the official Spring client library for the IPinfo.io IP address API,
-allowing you to lookup your own IP address, or get any of the following details
+allowing you to look up your own IP address, or get any of the following details
 for an IP:
 
- - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude and longitude)
- - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting or company)
+ - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
+ - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
  - [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
  - [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
@@ -15,7 +15,7 @@ Check all the data we have for your IP address [here](https://ipinfo.io/what-is-
 
 ## Getting Started
 
-You'll need an IPinfo API access token, which you can get by singing up for a
+You'll need an IPinfo API access token, which you can get by signing up for a
 free account at [https://ipinfo.io/signup](https://ipinfo.io/signup).
 
 The free plan is limited to 50,000 requests per month, and doesn't include some
@@ -152,7 +152,7 @@ other technologies change the origin of a request that a web server can see.
 
 - `XForwardedForIPStrategy`
   This strategy will extract the IP from the `X-Forwarded-For` header and if it's null
-  it'll extract IP using `REMOTE_ADDR` of client.
+  it'll extract IP using `REMOTE_ADDR` of the client.
 
 ### `AttributeStrategy`
 
@@ -174,7 +174,7 @@ handling system.
 
 ### Other Libraries
 
-There are [official IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails and Laravel. There are also many third party libraries and integrations available for our API.
+There are [official IPinfo client libraries](https://ipinfo.io/developers/libraries) available for many languages including PHP, Python, Go, Java, Ruby, and many popular frameworks such as Django, Rails, and Laravel. There are also many third-party libraries and integrations available for our API.
 
 ### About IPinfo
 
