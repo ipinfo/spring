@@ -6,7 +6,7 @@
 
     <groupId>io.ipinfo</groupId>
     <artifactId>ipinfo-spring</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
     <packaging>jar</packaging>
 
     <properties>

@@ -34,7 +34,7 @@ fields and additional request volumes see
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-spring</artifactId>
-        <version>0.2.0</version>
+        <version>0.3.1</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
