@@ -25,7 +25,7 @@ fields and additional request volumes see
 
 [Click here to view the Java Spring SDK's API documentation](https://ipinfo.github.io/spring/).
 
-⚠️ Note: This library does not currently support our newest free API https://ipinfo.io/lite. If you’d like to use IPinfo Lite, you can call the [endpoint directly](https://ipinfo.io/developers/responses#lite-api) using your preferred HTTP client. Developers are also welcome to contribute support for Lite by submitting a pull request.
+⚠️ Note: This library does not currently support our newest free API https://ipinfo.io/lite. If you’d like to use IPinfo Lite, you can call the [endpoint directly](https://ipinfo.io/developers/lite-api) using your preferred HTTP client. Developers are also welcome to contribute support for Lite by submitting a pull request.
 
 ## Usage
 
