@@ -1,7 +1,7 @@
 package io.ipinfo.spring.strategies.attribute;
 
 import io.ipinfo.api.model.IPResponse;
-
+import io.ipinfo.api.model.IPResponseLite;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface AttributeStrategy {
@@ -15,5 +15,24 @@ public interface AttributeStrategy {
         }
 
         return false;
+    }
+
+    default void storeLiteAttribute(
+        HttpServletRequest request,
+        IPResponseLite response
+    ) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support IPResponseLite."
+        );
+    }
+
+    default IPResponseLite getLiteAttribute(HttpServletRequest request) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support IPResponseLite."
+        );
+    }
+
+    default boolean hasLiteAttribute(HttpServletRequest request) {
+        return getLiteAttribute(request) != null;
     }
 }

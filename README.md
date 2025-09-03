@@ -25,7 +25,7 @@ fields and additional request volumes see
 
 [Click here to view the Java Spring SDK's API documentation](https://ipinfo.github.io/spring/).
 
-⚠️ Note: This library does not currently support our newest free API https://ipinfo.io/lite. If you’d like to use IPinfo Lite, you can call the [endpoint directly](https://ipinfo.io/developers/lite-api) using your preferred HTTP client. Developers are also welcome to contribute support for Lite by submitting a pull request.
+The library also supports the Lite API, see the [Lite API section](#lite-api) for more info.
 
 ## Usage
 
@@ -173,6 +173,30 @@ The `AttributeStrategy` allows the middleware to know where to store the
 
 Any exceptions such as `RateLimitedException` is passed through Spring's error
 handling system.
+
+### Lite API
+
+The library gives the possibility to use the [Lite API](https://ipinfo.io/developers/lite-api) too, authentication with your token is still required.
+
+The returned details are slightly different from the Core API.
+
+To use the Lite API you must use the `IPinfoLiteSpring`, it works in the same way as the `IPinfoSpring` class.
+
+```java
+    IPinfoLiteSpring ipinfoSpring = new IPinfoLiteSpring.Builder()
+        // Set the IPinfo instance. By default we provide one, however you're
+        // allowed to change this here. Also provide your IPinfo Access Token here.
+        .setIPinfo(new IPinfoLite.Builder().setToken("IPINFO ACCESS TOKEN").build())
+        // Set the InterceptorStrategy. By default we use
+        // BotInterceptorStrategy.
+        .interceptorStrategy(new BotInterceptorStrategy())
+        // Set the IPStrategy. By default we use SimpleIPStrategy.
+        .ipStrategy(new SimpleIPStrategy())
+        // Set the AttributeStrategy. By default we use SessionAttributeStrategy.
+        .attributeStrategy(new SessionAttributeStrategy())
+        // Finally build it.
+        .build();
+```
 
 ### Other Libraries
 
