@@ -3,6 +3,7 @@ package io.ipinfo.spring.strategies.attribute;
 import io.ipinfo.api.model.IPResponse;
 import io.ipinfo.api.model.IPResponseCore;
 import io.ipinfo.api.model.IPResponseLite;
+import io.ipinfo.api.model.IPResponsePlus;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface AttributeStrategy {
@@ -54,5 +55,24 @@ public interface AttributeStrategy {
 
     default boolean hasCoreAttribute(HttpServletRequest request) {
         return getCoreAttribute(request) != null;
+    }
+
+    default void storePlusAttribute(
+        HttpServletRequest request,
+        IPResponsePlus response
+    ) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support IPResponsePlus."
+        );
+    }
+
+    default IPResponsePlus getPlusAttribute(HttpServletRequest request) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support IPResponsePlus."
+        );
+    }
+
+    default boolean hasPlusAttribute(HttpServletRequest request) {
+        return getPlusAttribute(request) != null;
     }
 }
