@@ -1,7 +1,9 @@
 package io.ipinfo.spring.strategies.attribute;
 
 import io.ipinfo.api.model.IPResponse;
+import io.ipinfo.api.model.IPResponseCore;
 import io.ipinfo.api.model.IPResponseLite;
+import io.ipinfo.spring.IPinfoCoreSpring;
 import io.ipinfo.spring.IPinfoLiteSpring;
 import io.ipinfo.spring.IPinfoSpring;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,5 +40,22 @@ public class SessionAttributeStrategy implements AttributeStrategy {
         return (IPResponseLite) request
             .getSession()
             .getAttribute(IPinfoLiteSpring.ATTRIBUTE_KEY);
+    }
+
+    @Override
+    public void storeCoreAttribute(
+        HttpServletRequest request,
+        IPResponseCore response
+    ) {
+        request
+            .getSession()
+            .setAttribute(IPinfoCoreSpring.ATTRIBUTE_KEY, response);
+    }
+
+    @Override
+    public IPResponseCore getCoreAttribute(HttpServletRequest request) {
+        return (IPResponseCore) request
+            .getSession()
+            .getAttribute(IPinfoCoreSpring.ATTRIBUTE_KEY);
     }
 }
