@@ -1,6 +1,7 @@
 package io.ipinfo.spring.strategies.attribute;
 
 import io.ipinfo.api.model.IPResponse;
+import io.ipinfo.api.model.IPResponseCore;
 import io.ipinfo.api.model.IPResponseLite;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -34,5 +35,24 @@ public interface AttributeStrategy {
 
     default boolean hasLiteAttribute(HttpServletRequest request) {
         return getLiteAttribute(request) != null;
+    }
+
+    default void storeCoreAttribute(
+        HttpServletRequest request,
+        IPResponseCore response
+    ) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support IPResponseCore."
+        );
+    }
+
+    default IPResponseCore getCoreAttribute(HttpServletRequest request) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support IPResponseCore."
+        );
+    }
+
+    default boolean hasCoreAttribute(HttpServletRequest request) {
+        return getCoreAttribute(request) != null;
     }
 }
