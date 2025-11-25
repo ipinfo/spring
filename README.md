@@ -36,7 +36,7 @@ The library also supports the Lite API, see the [Lite API section](#lite-api) fo
     <dependency>
         <groupId>io.ipinfo</groupId>
         <artifactId>ipinfo-spring</artifactId>
-        <version>0.4.0</version>
+        <version>0.5.0</version>
         <scope>compile</scope>
     </dependency>
 </dependencies>
