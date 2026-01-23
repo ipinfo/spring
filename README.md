@@ -6,10 +6,10 @@ This is the official Spring client library for the IPinfo.io IP address API,
 allowing you to look up your own IP address, or get any of the following details
 for an IP:
 
- - [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
- - [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
- - [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
- - [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
+- [IP geolocation data](https://ipinfo.io/ip-geolocation-api) (city, region, country, postal code, latitude, and longitude)
+- [ASN information](https://ipinfo.io/asn-api) (ISP or network operator, associated domain name, and type, such as business, hosting, or company)
+- [Company data](https://ipinfo.io/ip-company-api) (the name and domain of the business that uses the IP address)
+- [Carrier details](https://ipinfo.io/ip-carrier-api) (the name of the mobile carrier and MNC and MCC for that carrier if the IP is used exclusively for mobile traffic)
 
 Check all the data we have for your IP address [here](https://ipinfo.io/what-is-my-ip).
 
@@ -67,14 +67,14 @@ Using this library is very simple. `IPinfoSpring` is exposed through a builder:
 To use this as an interceptor in Spring, you simply need to expose your
 configuration and add `IPinfoSpring` you obtained from the builder here:
 
-````java
+```java
 @Configuration
 public class ApplicationConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new IPinfoSpring.Builder().build());
     }
 }
-````
+```
 
 ### Accessing Value
 
@@ -86,7 +86,7 @@ attributes:
 
 The code below showcases the two different methods:
 
-````java
+```java
 import io.ipinfo.api.model.IPResponse;
 import io.ipinfo.spring.IPinfoSpring;
 import io.ipinfo.spring.strategies.attribute.AttributeStrategy;
@@ -125,7 +125,7 @@ public class MainController {
         return ipResponse.toString();
     }
 }
-````
+```
 
 ### `InterceptorStrategy`
 
@@ -196,6 +196,71 @@ To use the Lite API you must use the `IPinfoLiteSpring`, it works in the same wa
         .attributeStrategy(new SessionAttributeStrategy())
         // Finally build it.
         .build();
+```
+
+### Core API
+
+The library also supports the [Core API](https://ipinfo.io/developers/data-types#core-data), which provides city-level geolocation with nested geo and AS objects. Authentication with your token is required.
+
+To use the Core API you must use the `IPinfoCoreSpring`, it works in the same way as the `IPinfoSpring` class.
+
+```java
+    IPinfoCoreSpring ipinfoSpring = new IPinfoCoreSpring.Builder()
+        .setIPinfo(new IPinfoCore.Builder().setToken("IPINFO ACCESS TOKEN").build())
+        .interceptorStrategy(new BotInterceptorStrategy())
+        .ipStrategy(new SimpleIPStrategy())
+        .attributeStrategy(new SessionAttributeStrategy())
+        .build();
+```
+
+### Plus API
+
+The library also supports the [Plus API](https://ipinfo.io/developers/data-types#plus-data), which provides enhanced data including mobile carrier info and privacy detection. Authentication with your token is required.
+
+To use the Plus API you must use the `IPinfoPlusSpring`, it works in the same way as the `IPinfoSpring` class.
+
+```java
+    IPinfoPlusSpring ipinfoSpring = new IPinfoPlusSpring.Builder()
+        .setIPinfo(new IPinfoPlus.Builder().setToken("IPINFO ACCESS TOKEN").build())
+        .interceptorStrategy(new BotInterceptorStrategy())
+        .ipStrategy(new SimpleIPStrategy())
+        .attributeStrategy(new SessionAttributeStrategy())
+        .build();
+```
+
+### Residential Proxy API
+
+The library also supports the [Residential Proxy API](https://ipinfo.io/developers/residential-proxy-api), which allows you to check if an IP address is a residential proxy. Authentication with your token is required.
+
+To use the Residential Proxy API you must use the `IPinfoResproxySpring`, it works in the same way as the `IPinfoSpring` class.
+
+```java
+    IPinfoResproxySpring ipinfoSpring = new IPinfoResproxySpring.Builder()
+        .setIPinfo(new IPinfo.Builder().setToken("IPINFO ACCESS TOKEN").build())
+        .interceptorStrategy(new BotInterceptorStrategy())
+        .ipStrategy(new SimpleIPStrategy())
+        .attributeStrategy(new SessionAttributeStrategy())
+        .build();
+```
+
+The residential proxy details will be available through the `ResproxyResponse` object:
+
+```java
+@RequestMapping("/resproxy")
+public String resproxy(HttpServletRequest request) {
+    ResproxyResponse resproxy = (ResproxyResponse) request
+            .getSession()
+            .getAttribute(IPinfoResproxySpring.ATTRIBUTE_KEY);
+
+    if (resproxy != null) {
+        System.out.println(resproxy.getIp());  // 175.107.211.204
+        System.out.println(resproxy.getLastSeen());  // 2025-01-20
+        System.out.println(resproxy.getPercentDaysSeen());  // 0.85
+        System.out.println(resproxy.getService());  // Bright Data
+    }
+
+    return resproxy != null ? resproxy.toString() : "no resproxy data";
+}
 ```
 
 ### Other Libraries
