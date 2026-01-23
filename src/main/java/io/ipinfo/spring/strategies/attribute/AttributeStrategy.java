@@ -4,6 +4,7 @@ import io.ipinfo.api.model.IPResponse;
 import io.ipinfo.api.model.IPResponseCore;
 import io.ipinfo.api.model.IPResponseLite;
 import io.ipinfo.api.model.IPResponsePlus;
+import io.ipinfo.api.model.ResproxyResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface AttributeStrategy {
@@ -74,5 +75,24 @@ public interface AttributeStrategy {
 
     default boolean hasPlusAttribute(HttpServletRequest request) {
         return getPlusAttribute(request) != null;
+    }
+
+    default void storeResproxyAttribute(
+        HttpServletRequest request,
+        ResproxyResponse response
+    ) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support ResproxyResponse."
+        );
+    }
+
+    default ResproxyResponse getResproxyAttribute(HttpServletRequest request) {
+        throw new UnsupportedOperationException(
+            "This strategy does not support ResproxyResponse."
+        );
+    }
+
+    default boolean hasResproxyAttribute(HttpServletRequest request) {
+        return getResproxyAttribute(request) != null;
     }
 }

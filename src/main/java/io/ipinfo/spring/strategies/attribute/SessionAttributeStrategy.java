@@ -4,9 +4,11 @@ import io.ipinfo.api.model.IPResponse;
 import io.ipinfo.api.model.IPResponseCore;
 import io.ipinfo.api.model.IPResponseLite;
 import io.ipinfo.api.model.IPResponsePlus;
+import io.ipinfo.api.model.ResproxyResponse;
 import io.ipinfo.spring.IPinfoCoreSpring;
 import io.ipinfo.spring.IPinfoLiteSpring;
 import io.ipinfo.spring.IPinfoPlusSpring;
+import io.ipinfo.spring.IPinfoResproxySpring;
 import io.ipinfo.spring.IPinfoSpring;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -76,5 +78,22 @@ public class SessionAttributeStrategy implements AttributeStrategy {
         return (IPResponsePlus) request
             .getSession()
             .getAttribute(IPinfoPlusSpring.ATTRIBUTE_KEY);
+    }
+
+    @Override
+    public void storeResproxyAttribute(
+        HttpServletRequest request,
+        ResproxyResponse response
+    ) {
+        request
+            .getSession()
+            .setAttribute(IPinfoResproxySpring.ATTRIBUTE_KEY, response);
+    }
+
+    @Override
+    public ResproxyResponse getResproxyAttribute(HttpServletRequest request) {
+        return (ResproxyResponse) request
+            .getSession()
+            .getAttribute(IPinfoResproxySpring.ATTRIBUTE_KEY);
     }
 }
